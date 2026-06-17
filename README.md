@@ -1,12 +1,5 @@
 # Agentic ClickHouse Demos
 
-Small, reproducible demos that show one idea across different domains.
-
-> **Agentic AI is only as good as the engine underneath it.**
-> Answering a question over your data takes many queries: plan the SQL, read the
-> rows, refine, and answer. With ClickHouse returning each query in milliseconds,
-> the whole exchange is fast enough to feel like a conversation.
-
 You ask a question in plain English. Claude writes the SQL, ClickHouse runs it,
 and you get the answer back along with the exact query that produced it. Every
 question is saved, so asking it again replays the SQL live at no model cost.
