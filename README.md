@@ -34,30 +34,42 @@ _(More coming - marketing analytics, etc. Each new demo is just a folder under `
 
 ## Quick start (≈5 minutes)
 
-**Prereqs:** Docker, Python 3.10+, and an `ANTHROPIC_API_KEY`.
+**Prereqs:** Python 3.10+, an `ANTHROPIC_API_KEY`, and a **ClickHouse Cloud**
+service (free trial - no install). Prefer to run the database locally instead?
+See [Local ClickHouse via Docker](#alternative-local-clickhouse-via-docker) below.
 
 ```bash
-# 1. start ClickHouse locally
-docker compose up -d
-
-# 2. python deps + config
+# 1. python deps
 pip install -r requirements.txt
-cp .env.example .env        # then put your ANTHROPIC_API_KEY in .env
+
+# 2. config: copy the template, then add your Anthropic key + ClickHouse Cloud
+#    connection details (host/password from your Cloud service "Connect" panel)
+cp .env.example .env
 
 # 3. generate synthetic data (~10M rows; use --quick for a fast ~2M)
 python demos/healthcare_rpm/generate_data.py
 
-# 4a. run the agent in the terminal
-python demos/healthcare_rpm/run.py
-
-# 4b. ...or launch the web interface
+# 4. launch the web app and ask questions in plain English
 streamlit run demos/healthcare_rpm/app.py
+#    ...or use the terminal:  python demos/healthcare_rpm/run.py
 ```
 
-You'll watch the agent run query after query - each timed in milliseconds -
-then deliver a ranked, explained risk report.
+Ask something like *"Which 10 patients have the lowest average SpO2 in the last
+3 days?"* - Claude writes the SQL, ClickHouse Cloud answers in milliseconds, and
+the query is saved so re-running it later costs **0 AI tokens**.
 
 > All data is **100% synthetic**. No real people, no PHI.
+
+### Alternative: local ClickHouse via Docker
+
+Prefer not to use the cloud? Run ClickHouse locally instead - uncomment the
+Option B (local) block in your `.env`, then:
+
+```bash
+docker compose up -d
+```
+
+Everything else (steps 1, 3, and 4 above) is identical.
 
 ---
 
@@ -65,14 +77,15 @@ then deliver a ranked, explained risk report.
 
 ```
 src/core/
-  db.py       # ClickHouse connection + timed query helper
-  agent.py    # the reusable agentic loop (Claude tool-use + run_sql tool)
+  db.py            # ClickHouse connection + timed query helper
+  agent.py         # the reusable agentic loop (Claude tool-use + run_sql tool)
+  saved_queries.py # persistent SQL store - replay live with 0 AI tokens
 demos/
   healthcare_rpm/
     schema.sql        # ClickHouse tables
     generate_data.py  # synthetic data generator
-    run.py            # wires the schema + goal into the agent
-    GOAL.md           # what this demo proves
+    app.py            # Streamlit UI - ask questions, get SQL + results
+    run.py            # same investigation from the terminal
 ```
 
 **To add a new demo:** create `demos/<your_demo>/` with its own `schema.sql`,
