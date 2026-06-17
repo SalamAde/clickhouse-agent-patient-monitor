@@ -3,14 +3,16 @@
 Small, reproducible demos showing the same idea in different domains:
 
 > **Agentic AI is only as good as the engine underneath it.**
-> An agent that *investigates* runs dozens of queries to answer one goal.
-> On a slow database that's unusable. On ClickHouse - milliseconds per query -
-> the agent thinks fast enough to be genuinely useful.
+> Answering a question over your data means running query after query - plan
+> the SQL, read the rows, refine, answer. On a slow database that's unusable.
+> On ClickHouse - milliseconds per query - it's fast enough to feel like a
+> conversation.
 > **ClickHouse is the engine behind AI agents.**
 
-You give the agent a **goal**, not a question. It plans, runs many ClickHouse
-queries, reads the results, drills into anomalies, and returns an
-evidence-backed conclusion + recommended action - in seconds.
+You ask a question in plain English. Claude writes the SQL, ClickHouse runs it
+in milliseconds, and you get the answer back with the exact query behind it - in
+seconds. Saved questions replay their SQL live, so asking again costs
+**0 AI tokens**.
 
 ## Architecture
 
@@ -24,9 +26,9 @@ next run replays the SQL live with **0 AI tokens**.
 
 ## Demos
 
-| # | Demo | What the agent investigates |
-|---|------|------------------------------|
-| 01 | [`healthcare_rpm`](demos/healthcare_rpm/) | Finds patients deteriorating in remote-monitoring data (~10M synthetic vitals) |
+| # | Demo | What you can ask about |
+|---|------|------------------------|
+| 01 | [`healthcare_rpm`](demos/healthcare_rpm/) | Which patients are deteriorating in remote-monitoring data (~10M synthetic vitals) |
 
 _(More coming - marketing analytics, etc. Each new demo is just a folder under `demos/`.)_
 
