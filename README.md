@@ -3,23 +3,20 @@
 Small, reproducible demos showing the same idea in different domains:
 
 > **Agentic AI is only as good as the engine underneath it.**
-> Answering a question over your data means running query after query - plan
-> the SQL, read the rows, refine, answer. On a slow database that's unusable.
-> On ClickHouse - milliseconds per query - it's fast enough to feel like a
-> conversation.
-> **ClickHouse is the engine behind AI agents.**
+> Answering a question over your data means running query after query - from planning
+> the SQL, to refining the answer. using ClickHouse - milliseconds per query - it's fast enough to feel like a conversation.
 
 You ask a question in plain English. Claude writes the SQL, ClickHouse runs it
 in milliseconds, and you get the answer back with the exact query behind it - in
-seconds. Saved questions replay their SQL live, so asking again costs
+seconds. Saved questions can be used to rerun SQL live, at no extra model cost.
 **0 AI tokens**.
 
 ## Architecture
 
 ![Patient Risk Monitor architecture](assets/architecture.png)
 
-A question flows from the Streamlit app to a two-phase Claude engine (plan the SQL,
-then summarize the rows), runs against ClickHouse in ~30 ms, and is saved so the
+A question goes from the Streamlit app to a two-phase Claude engine (plan the SQL,
+then summarise the rows), runs against ClickHouse in ~30 ms, and is saved so the
 next run replays the SQL live with **0 AI tokens**.
 
 ---
