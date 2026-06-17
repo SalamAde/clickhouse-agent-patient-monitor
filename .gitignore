@@ -1,0 +1,19 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# local run logs / sample outputs (regenerated locally, NOT source)
+last_run*.txt
+sample_output.txt
+*.log
+
+# generated/exported data (data lives in ClickHouse, never in the repo)
+data/
+*.csv
+*.parquet
+*.ndjson
+
+# saved analyses (local; rebuilt as questions are asked / regenerated)
+saved_queries.json
