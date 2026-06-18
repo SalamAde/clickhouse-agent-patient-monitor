@@ -12,7 +12,6 @@ A question travels from the Streamlit app to a two-phase Claude engine that firs
 plans the SQL, then summarises the rows. ClickHouse answers in about 30 ms. The
 query is stored, so the next run replays it live for **0 AI tokens**.
 
----
 
 ## Demos
 
@@ -22,7 +21,6 @@ query is stored, so the next run replays it live for **0 AI tokens**.
 
 _More demos are on the way, such as marketing analytics. Each one is just a folder under `demos/`._
 
----
 
 ## Quick start (about 5 minutes)
 
@@ -38,7 +36,7 @@ pip install -r requirements.txt
 #    connection details (host and password from your Cloud service "Connect" panel)
 cp .env.example .env
 
-# 3. generate synthetic data (~10M rows; use --quick for a fast ~2M)
+# 3. generate synthetic data (~10M rows)
 python demos/healthcare_rpm/generate_data.py
 
 # 4. launch the web app and ask questions in plain English
@@ -61,9 +59,7 @@ your `.env`, then start the container:
 docker compose up -d
 ```
 
-Steps 1, 3, and 4 above stay the same.
-
----
+Steps 1, 3, and 4 above stay the same
 
 ## How it's built
 
@@ -79,10 +75,6 @@ demos/
     app.py            # Streamlit UI: ask questions, get SQL and results
     run.py            # same investigation from the terminal
 ```
-
-**To add a new demo:** create `demos/<your_demo>/` with its own `schema.sql`,
-`generate_data.py`, and a `run.py` that calls `investigate(goal, schema)`. The
-agent core stays the same.
 
 The agent loop is easy to follow: one tool (`run_sql`), a plain message loop, and
 a prompt-cached system prompt and schema that keep a multi-step investigation
